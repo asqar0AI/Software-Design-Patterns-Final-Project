@@ -12,7 +12,7 @@ public class Main {
 	 * Decorator => to decorating output messages and chess board +
 	 * Factory => to creating chess figures +
 	 * Strategy => to defining moves for each figure type +-
-	 * Observer => to notify players about wrong moves and match result
+	 * Observer => to notify players about wrong moves and match result +
 	 * Adapter => to convert 'a1' like coordinates into numbers (1, 1)
 	 * Singleton => to make sure there is only 1 enter to the game +
 	 * to create single decorator +
@@ -31,13 +31,19 @@ public class Main {
 		game.display(startScreen);
 		String response = input.nextLine().toLowerCase();
 		if (response.equals("y")) {
-			game.display("Game Starts");
+			game.display("""
+			             Game Starts!
+			             
+			             Write coordinates separated
+			             Example: b1 a3""");
 			chessGame = ChessGame.getInstance();
 		} else if (response.equals("n")) {
 			game.display("Bye!");
 		} else {
 			game.display("Invalid choice. Exiting the game.");
 		}
+		
+		//TODO сделал адаптер, осталось ходы и стратегию написать
 	}
 	
 }

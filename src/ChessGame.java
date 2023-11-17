@@ -1,7 +1,10 @@
+import adapter.CoordinateConverter;
 import factory.PieceFactory;
 import figures.Piece;
+import observer.Player;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ChessGame {
 	private static ChessGame theGame;
@@ -15,10 +18,15 @@ public class ChessGame {
 	                               "        " +
 	                               "pppppppp" +
 	                               "rnbkqbnr";
+	private final ArrayList<Player> players;
+	private String message;
 	
 	
 	private ChessGame() {
 		board = new ArrayList<>();
+		players = new ArrayList<>(2);
+		registerPlayer("Blue");
+		registerPlayer("Red");
 		for (int i = 0; i < 8; i++) {
 			board.add(new ArrayList<>());
 			for (int j = 0; j < 8; j++) {
@@ -35,11 +43,7 @@ public class ChessGame {
 			}
 		}
 		
-		
-		for (int i = 0; i < 2; i++) {
-			Main.game.display(this.toString());
-			System.out.println(((i % 2) + 1 == 1 ? "Blue" : "Red") + ", your turn:\n");
-		}
+		Game();
 	}
 	
 	public static ChessGame getInstance() {
@@ -51,6 +55,38 @@ public class ChessGame {
 			}
 		}
 		return theGame;
+	}
+	
+	private void Game() {
+		Scanner moveInput = new Scanner(System.in);
+		for (int i = 0; ; i++) {
+			Main.game.display(this.toString());
+			notifyTurn(i);
+			String departure = moveInput.next(), destination = moveInput.next();
+			moveInput.nextLine();
+			while (!Character.isLetter(departure.charAt(0)) || !Character.isDigit(departure.charAt(1)) ||
+			       !Character.isLetter(destination.charAt(0)) || !Character.isDigit(destination.charAt(1))) {
+				departure = moveInput.next();
+				destination = moveInput.next();
+				CoordinateConverter.setDeparture(departure);
+				CoordinateConverter.setDestination(destination);
+			}
+		}
+	}
+	
+	public void notifyTurn(int x) {
+		message = "Turn of " + (players.get((x % 2)).name) + ":\n";
+		notifyPlayers();
+	}
+	
+	public void registerPlayer(String player) {
+		players.add(new Player(player));
+	}
+	
+	public void notifyPlayers() {
+		for (Player player : players) {
+			player.update(message);
+		}
 	}
 	
 	@Override
