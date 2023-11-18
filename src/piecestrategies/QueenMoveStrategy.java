@@ -20,11 +20,15 @@ public class QueenMoveStrategy implements MoveStrategy
         }
         if(((Math.abs(deltaX) != 0) == (Math.abs(deltaY) != 0)) && Math.abs(deltaX) != Math.abs(deltaY))
         {
-            return "Queen can move only vertically, horizontally or diagonally";
+            return "Queen can move only rectilinearly or diagonally";
         }
         if(deltaY == 0 && deltaX == 0)
         {
             return "Queen must move";
+        }
+        if(!canPass(board, curY, curX, destY, destX))
+        {
+            return "Queen can't move through a piece";
         }
         
         

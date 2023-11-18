@@ -28,7 +28,7 @@ public class BishopMoveStrategy implements MoveStrategy
         }
         if(!canPass(board, curY, curX, destY, destX))
         {
-            return "Bishop can't move though a piece";
+            return "Bishop can't move through a piece";
         }
         
         return null;
