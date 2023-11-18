@@ -1,6 +1,6 @@
 package factory;
 
-import figures.*;
+import pieces.*;
 
 public class PieceFactory implements PieceFactoryInterface {
 	@Override
