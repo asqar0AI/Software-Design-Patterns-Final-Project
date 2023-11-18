@@ -40,6 +40,11 @@ public abstract class Piece
         String res = moveStrategy.move(board, this, y, x);
         if(res == null)
         {
+            if(board.get(y).get(x) != null && board.get(y).get(x).color == this.color)
+            {
+                System.out.println("You can't beat ally pieces");
+                return false;
+            }
             // moves a piece
             board.get(y).set(x, board.get(posY).get(posX));
             

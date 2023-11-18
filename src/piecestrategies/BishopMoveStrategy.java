@@ -41,7 +41,6 @@ public class BishopMoveStrategy implements MoveStrategy
         deltaY = destY - curY;
         deltaX = destX - curX;
         int i = deltaY / Math.abs(deltaY), j = deltaX / Math.abs(deltaX);
-        System.out.println(i + " " + j);
         while((curY + i <= 7 && curY + i >= 0) && (curX + j <= 8 && curX + j >= 0))
         {
             curY += i;
