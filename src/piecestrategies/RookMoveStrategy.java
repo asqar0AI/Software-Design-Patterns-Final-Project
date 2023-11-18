@@ -18,17 +18,13 @@ public class RookMoveStrategy implements MoveStrategy
         {
             return "Piece can't move out of borders, try again.";
         }
-        if(destY == 0 && destX == 0)
+        if((Math.abs(deltaX) != 0) == (Math.abs(deltaY) != 0))
         {
-            return "Bishop can't should move";
-        }
-        if((Math.abs(deltaX) > 0 ? 1 : 0) + (Math.abs(deltaY) > 0 ? 1 : 0) != 1)
-        {
-            return "Rook can only move horizontally or vertically";
+            return "Rook can only move rectilinear";
         }
         if(!canPass(board, curY, curX, destY, destX))
         {
-            return "Bishop can't move though a piece";
+            return "Rook can't move through a piece";
         }
         
         return null;
@@ -36,25 +32,48 @@ public class RookMoveStrategy implements MoveStrategy
     
     private boolean canPass(ArrayList<ArrayList<Piece>> board, int curY, int curX, int destY, int destX)
     {
+        
         boolean pass = false;
         int deltaY, deltaX;
         deltaY = destY - curY;
         deltaX = destX - curX;
-        int i = deltaY / Math.abs(deltaY), j = deltaX / Math.abs(deltaX);
-        while((curY + i <= 7 && curY + i >= 0) && (curX + j <= 8 && curX + j >= 0))
+        if(deltaY != 0)
         {
-            curY += i;
-            curX += j;
-            if(curY == destY && curX == destX)
+            // vertical
+            int i = deltaY / Math.abs(deltaY);
+            while((curY + i <= 7 && curY + i >= 0))
             {
-                pass = true;
-                break;
+                curY += i;
+                if(curY == destY)
+                {
+                    pass = true;
+                    break;
+                }
+                if(board.get(curY).get(curX) != null)
+                {
+                    break;
+                }
             }
-            if(board.get(curY).get(curX) != null)
+        }
+        else
+        {
+            // horizontal
+            int i = deltaX / Math.abs(deltaX);
+            while((curX + i <= 7 && curX + i >= 0))
             {
-                break;
+                curX += i;
+                if(curX == destX)
+                {
+                    pass = true;
+                    break;
+                }
+                if(board.get(curY).get(curX) != null)
+                {
+                    break;
+                }
             }
         }
         return pass;
     }
+    
 }

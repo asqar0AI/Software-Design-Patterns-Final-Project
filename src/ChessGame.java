@@ -104,7 +104,8 @@ public class ChessGame
                 if(board.get(CoordinateConverter.getDepY()).get(CoordinateConverter.getDepX())
                         .move(board, CoordinateConverter.getDestY(), CoordinateConverter.getDestX()))
                 {
-                    System.out.println("moved");
+                    // cleans footprint
+                    board.get(CoordinateConverter.getDepY()).set(CoordinateConverter.getDepX(), null);
                     break;
                 }
             }

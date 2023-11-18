@@ -22,9 +22,9 @@ public class BishopMoveStrategy implements MoveStrategy
         {
             return "Bishop can move only diagonally";
         }
-        if(destY == 0 || destX == 0)
+        if(deltaY == 0 && deltaX == 0)
         {
-            return "Bishop should move";
+            return "Bishop must move";
         }
         if(!canPass(board, curY, curX, destY, destX))
         {
@@ -41,6 +41,7 @@ public class BishopMoveStrategy implements MoveStrategy
         deltaY = destY - curY;
         deltaX = destX - curX;
         int i = deltaY / Math.abs(deltaY), j = deltaX / Math.abs(deltaX);
+        System.out.println(i + " " + j);
         while((curY + i <= 7 && curY + i >= 0) && (curX + j <= 8 && curX + j >= 0))
         {
             curY += i;

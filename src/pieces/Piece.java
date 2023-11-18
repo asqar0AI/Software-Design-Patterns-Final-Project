@@ -1,9 +1,9 @@
 package pieces;
 
-import adapter.CoordinateConverter;
 import piecestrategies.MoveStrategy;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public abstract class Piece
 {
@@ -40,15 +40,63 @@ public abstract class Piece
         String res = moveStrategy.move(board, this, y, x);
         if(res == null)
         {
+            // moves a piece
+            board.get(y).set(x, board.get(posY).get(posX));
+            
             setPos(y, x);
-            if(board.get(CoordinateConverter.getDestY()).get(CoordinateConverter.getDestX()) != null)
+            return true;
+        }
+        if(res.equals("en passant"))
+        {
+            // moves a piece
+            board.get(y).set(x, board.get(posY).get(posX));
+            // removes beaten pawn
+            board.get(posY).set(x, null);
+            
+            setPos(y, x);
+            return true;
+        }
+        if(res.equals("morph"))
+        {
+            System.out.println("Your pawn can transform into different piece\n Write the letter of wanted piece:\n");
+            Scanner newLetterInput = new Scanner(System.in);
+            boolean isChosen = false;
+            while(!isChosen)
             {
-                board.get(CoordinateConverter.getDestY()).get(CoordinateConverter.getDestX()).setPos(0, 0);
+                String newLetter = newLetterInput.nextLine();
+                switch(newLetter)
+                {
+                    case ("P"):
+                        board.get(y).set(x, new Pawn(y, x));
+                        setColor(board.get(posY).get(posX).color);
+                        isChosen = true;
+                        break;
+                    case ("R"):
+                        board.get(y).set(x, new Pawn(y, x));
+                        setColor(board.get(posY).get(posX).color);
+                        isChosen = true;
+                        break;
+                    case ("N"):
+                        board.get(y).set(x, new Pawn(y, x));
+                        setColor(board.get(posY).get(posX).color);
+                        isChosen = true;
+                        break;
+                    case ("B"):
+                        board.get(y).set(x, new Pawn(y, x));
+                        setColor(board.get(posY).get(posX).color);
+                        isChosen = true;
+                        break;
+                    case ("Q"):
+                        board.get(y).set(x, new Pawn(y, x));
+                        setColor(board.get(posY).get(posX).color);
+                        isChosen = true;
+                        break;
+                    
+                    default:
+                        System.out.println("Choose one from: P, R, N, B, Q");
+                }
             }
-            board.get(CoordinateConverter.getDestY()).set(CoordinateConverter.getDestX(),
-                                                          board.get(CoordinateConverter.getDepY())
-                                                               .get(CoordinateConverter.getDepX()));
-            board.get(CoordinateConverter.getDepY()).set(CoordinateConverter.getDepX(), null);
+            
             return true;
         }
         System.out.println(res);
