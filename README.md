@@ -1,8 +1,5 @@
 # Java Chess Game
 
-**Group Name:** SE-2221  
-**Team Member:** Nurym Asqar
-
 ## Introduction
 This Java project is a classic implementation of chess in the console, focusing on reliability, extensibility, and core programming principles. It employs design patterns including factory, strategy, singleton, adapter, observer, and decorator to ensure a modular and maintainable codebase.
 
