@@ -22,6 +22,7 @@ public abstract class Piece
         prevX = x;
     }
     
+    // sets side for piece
     public void setColor(int color)
     {
         this.color = color;
@@ -37,6 +38,8 @@ public abstract class Piece
         }
     }
     
+    /*
+     * checks if move is possible via strategies of each piece type*/
     public boolean move(ArrayList<ArrayList<Piece>> board, int destY, int destX)
     {
         int whiteKingY = -1, whiteKingX = -1;

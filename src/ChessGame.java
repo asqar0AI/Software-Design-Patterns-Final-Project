@@ -15,10 +15,12 @@ public class ChessGame
     private final String classic =
             "RNBKQBNR" + "PPPPPPPP" + "        " + "        " + "        " + "        " + "pppppppp" + "rnbkqbnr";
     private final ArrayList<Player> players;
-    private String message;
     private final CoordinateAppender indexer;
+    private String message;
     
-    
+    /*
+     * Constructor of the game
+     * */
     private ChessGame()
     {
         indexer = CoordinateAppender.getInstance();
@@ -46,9 +48,13 @@ public class ChessGame
             }
         }
         
+        /*Launching the chess game*/
         Game();
     }
     
+    
+    /*
+     * Singleton: retrieves single instance of the game*/
     public static ChessGame getInstance()
     {
         if(theGame == null)
@@ -64,15 +70,24 @@ public class ChessGame
         return theGame;
     }
     
+    /*
+     * Main game process*/
     private void Game()
     {
         Scanner moveInput = new Scanner(System.in);
         for(int i = 0; ; i++)
         {
+            /*
+             * Decorator: decorating the chess board*/
             Main.game.display(indexer.decorateChessboard(this.toString()));
+            
+            /*
+             * Observer: notifying about players' turn*/
             notifyTurn(i);
             String departure, destination;
             
+            /*
+             * Works until it gets valid input coordinate*/
             while(true)
             {
                 departure = moveInput.next();
@@ -84,36 +99,42 @@ public class ChessGame
                     continue;
                 }
                 
+                
+                /*
+                 * Adapter: using adapter to convert familiar to human coordinates into matrix coordinates so program could understand it*/
                 CoordinateConverter.setDeparture(departure);
                 CoordinateConverter.setDestination(destination);
                 int depY, depX, destY, destX;
+                // departure point
                 depY = CoordinateConverter.getDepY();
                 depX = CoordinateConverter.getDepX();
+                // destination point
                 destY = CoordinateConverter.getDestY();
                 destX = CoordinateConverter.getDestX();
                 
-                
+                // checks if departure point is chess piece
                 if(!isPiece(depY, depX))
                 {
                     System.out.println("You must choose existing piece");
                     continue;
                 }
+                // checks if player moving its own pieces
                 if(!isCorrectColor(depY, depX, i))
                 {
                     System.out.println("You can move only your pieces");
                     continue;
                 }
+                // checks if move executed successfully
                 if(board.get(CoordinateConverter.getDepY()).get(CoordinateConverter.getDepX())
                         .move(board, CoordinateConverter.getDestY(), CoordinateConverter.getDestX()))
                 {
-                    // cleans footprint
-                    board.get(CoordinateConverter.getDepY()).set(CoordinateConverter.getDepX(), null);
                     break;
                 }
             }
         }
     }
     
+    // method to check if input coordinates are appropriate
     private boolean isChessCoordinate(String departure, String destination)
     {
         boolean is2 = departure.length() == 2 && destination.length() == 2;
@@ -132,25 +153,24 @@ public class ChessGame
         return is2 && isAppropriate;
     }
     
+    // checks if there is a piece in given coordinate
     private boolean isPiece(int depY, int depX)
     {
         return board.get(depY).get(depX) != null;
     }
     
+    // checks if color of piece is appropriate to player's color
     private boolean isCorrectColor(int depY, int depX, int moveCount)
     {
         return board.get(depY).get(depX).color == (moveCount + 1) % 2;
     }
     
+    /*
+     * Observer: notifies players about the turn*/
     public void notifyTurn(int x)
     {
         message = "Turn of " + (players.get((x + 1) % 2).name) + ":\n";
         notifyPlayers();
-    }
-    
-    public void registerPlayer(String player)
-    {
-        players.add(new Player(player));
     }
     
     public void notifyPlayers()
@@ -160,7 +180,16 @@ public class ChessGame
             player.update(message);
         }
     }
+    // adds player to the game
     
+    public void registerPlayer(String player)
+    {
+        players.add(new Player(player));
+    }
+    
+    
+    /*
+     * Converting chess board into user-friendly text*/
     @Override
     public String toString()
     {
