@@ -14,10 +14,7 @@ public class KnightMoveStrategy implements MoveStrategy
         deltaX = destX - piece.posX;
         curY = piece.posY;
         curX = piece.posX;
-        if(destY > 7 || destX > 7 || destY < 0 || destX < 0)
-        {
-            return "Piece can't move out of borders, try again.";
-        }
+        
         if(Math.abs(deltaY) + Math.abs(deltaX) != 3)
         {
             return "Wrong move for Knight";

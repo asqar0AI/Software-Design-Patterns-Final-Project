@@ -16,11 +16,6 @@ public class WhitePawnMoveStrategy implements MoveStrategy
         curY = piece.posY;
         curX = piece.posX;
         
-        // to check if destination is out of borders
-        if(destY > 7 || destX > 7 || destY < 0 || destX < 0)
-        {
-            return "Piece can't move out of borders, try again.";
-        }
         // to check if destination is behind
         if(deltaY < 0)
         {
@@ -59,7 +54,8 @@ public class WhitePawnMoveStrategy implements MoveStrategy
                 return "Pawn can't beat forward";
             }
         }
-        if(deltaX == 1 && (!canBeat(board, destY, destX) || !isEnPassant(board, curY, destX)))
+        if(deltaX == 1 && ((!canBeat(board, destY, destX) && !isEnPassant(board, curY, destX)) || !canBeat(board, destY,
+                                                                                                           destX)))
         {
             return "There's nothing to beat";
         }
@@ -67,21 +63,18 @@ public class WhitePawnMoveStrategy implements MoveStrategy
         {
             return "en passant";
         }
-        if(destY == 0 || destY == 7)
-        {
-            return "morph";
-        }
         return null;
     }
     
     private boolean isEnPassant(ArrayList<ArrayList<Piece>> board, int curY, int destX)
     {
-        return isEnemyPawnNear(board, curY, destX) && curY == 3;
+        return isEnemyPawnNear(board, curY, destX) && curY == 3 && board.get(curY).get(destX).prevY == 1;
     }
     
     private boolean isEnemyPawnNear(ArrayList<ArrayList<Piece>> board, int curY, int destX)
     {
-        return board.get(curY).get(destX).getClass() == Pawn.class && board.get(curY).get(destX).color == 0;
+        return board.get(curY).get(destX) != null && board.get(curY).get(destX).getClass() == Pawn.class && board.get(
+                curY).get(destX).color == 0;
     }
     
     private boolean canBeat(ArrayList<ArrayList<Piece>> board, int destY, int destX)

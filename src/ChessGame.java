@@ -1,4 +1,5 @@
 import adapter.CoordinateConverter;
+import decorator.CoordinateAppender;
 import factory.PieceFactory;
 import observer.Player;
 import pieces.Piece;
@@ -8,7 +9,6 @@ import java.util.Scanner;
 
 public class ChessGame
 {
-    public static int enPassent = -1;
     private static ArrayList<ArrayList<Piece>> board;
     private static ChessGame theGame;
     private final PieceFactory pieceFactory = new PieceFactory();
@@ -16,10 +16,12 @@ public class ChessGame
             "RNBKQBNR" + "PPPPPPPP" + "        " + "        " + "        " + "        " + "pppppppp" + "rnbkqbnr";
     private final ArrayList<Player> players;
     private String message;
+    private final CoordinateAppender indexer;
     
     
     private ChessGame()
     {
+        indexer = CoordinateAppender.getInstance();
         board = new ArrayList<>();
         players = new ArrayList<>(2);
         registerPlayer("Red");
@@ -67,7 +69,7 @@ public class ChessGame
         Scanner moveInput = new Scanner(System.in);
         for(int i = 0; ; i++)
         {
-            Main.game.display(this.toString());
+            Main.game.display(indexer.decorateChessboard(this.toString()));
             notifyTurn(i);
             String departure, destination;
             

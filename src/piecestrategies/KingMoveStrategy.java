@@ -1,6 +1,7 @@
 package piecestrategies;
 
 import pieces.Piece;
+import pieces.Rook;
 
 import java.util.ArrayList;
 
@@ -14,9 +15,28 @@ public class KingMoveStrategy implements MoveStrategy
         deltaX = destX - piece.posX;
         curY = piece.posY;
         curX = piece.posX;
-        if(destY > 7 || destX > 7 || destY < 0 || destX < 0)
+        if(deltaY == 0 && Math.abs(deltaX) == 2 && piece.prevY == curY && curX == piece.prevX)
         {
-            return "Piece can't move out of borders, try again.";
+            if(deltaX < 0 && board.get(curY).get(0).getClass() == Rook.class && isClear(board, curY, curX, 0,
+                                                                                        deltaX / 2))
+            {
+                if(board.get(curY).get(0).prevY == board.get(curY).get(0).posY && board.get(curY)
+                                                                                       .get(0).prevX == board.get(curY)
+                                                                                                             .get(0).posX)
+                {
+                    return "castling";
+                }
+            }
+            if(deltaX > 0 && board.get(curY).get(7).getClass() == Rook.class && isClear(board, curY, curX, 7,
+                                                                                        deltaX / 2))
+            {
+                if(board.get(curY).get(7).prevY == board.get(curY).get(7).posY && board.get(curY)
+                                                                                       .get(7).prevX == board.get(curY)
+                                                                                                             .get(7).posX)
+                {
+                    return "castling";
+                }
+            }
         }
         if(((Math.abs(deltaX) != 0) == (Math.abs(deltaY) != 0)) && Math.abs(deltaX) != Math.abs(deltaY))
         {
@@ -32,6 +52,25 @@ public class KingMoveStrategy implements MoveStrategy
         }
         
         return null;
+    }
+    
+    private boolean isClear(ArrayList<ArrayList<Piece>> board, int curY, int curX, int destX, int i)
+    {
+        boolean pass = false;
+        while((curX + i <= 7 && curX + i >= 0))
+        {
+            curX += i;
+            if(curX == destX)
+            {
+                pass = true;
+                break;
+            }
+            if(board.get(curY).get(curX) != null)
+            {
+                break;
+            }
+        }
+        return pass;
     }
     
 }

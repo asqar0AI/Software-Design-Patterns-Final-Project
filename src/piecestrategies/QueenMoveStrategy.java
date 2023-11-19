@@ -14,10 +14,7 @@ public class QueenMoveStrategy implements MoveStrategy
         deltaX = destX - piece.posX;
         curY = piece.posY;
         curX = piece.posX;
-        if(destY > 7 || destX > 7 || destY < 0 || destX < 0)
-        {
-            return "Piece can't move out of borders, try again.";
-        }
+        
         if(((Math.abs(deltaX) != 0) == (Math.abs(deltaY) != 0)) && Math.abs(deltaX) != Math.abs(deltaY))
         {
             return "Queen can move only rectilinearly or diagonally";
