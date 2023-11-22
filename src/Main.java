@@ -28,7 +28,7 @@ public class Main
                                    """;
         
         // Filling with white background
-        System.out.println("\033[48;5;231m");
+        System.out.println("\033[48;5;231m" + "\u001B[30m");
         
         
         final Scanner input = new Scanner(System.in);

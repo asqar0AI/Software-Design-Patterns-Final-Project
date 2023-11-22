@@ -4,6 +4,7 @@ import pieces.*;
 
 /*
  * Factory: factory that creates pieces for the chess game*/
+
 public class PieceFactory implements PieceFactoryInterface
 {
     @Override
