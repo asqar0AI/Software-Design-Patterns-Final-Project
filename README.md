@@ -38,6 +38,4 @@ The project aims to provide an interactive platform for chess enthusiasts, offer
 The Java Chess Game demonstrates effective design and implementation in Java programming, showcasing a comprehensive architectural approach through integrated design patterns. The user-friendly interface and educational value highlight its significance beyond entertainment, reinforcing coding principles like SOLID, DRY, and KISS.
 
 This project serves as a testament to Java's versatility in game development, offering both recreational value and real-world learning scenarios, preparing students for professional challenges while setting a benchmark for excellence in Java programming.
-## Links
-**Documentation**
-- [Final-SDP](https://astanait-my.sharepoint.com/:w:/g/personal/220209_astanait_edu_kz/EY6Qu_XYKdZLs1z3v9nRAHABuBVtpu3gqmKMKE-NhB-o5w?e=Uc9LHW)
+
